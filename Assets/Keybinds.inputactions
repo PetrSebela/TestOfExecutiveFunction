@@ -1,0 +1,54 @@
+{
+    "name": "Keybinds",
+    "maps": [
+        {
+            "name": "TrailMakingTest",
+            "id": "b86a9282-8a45-4dfb-8e9d-333f8a3e9da2",
+            "actions": [
+                {
+                    "name": "MouseButtonDown",
+                    "type": "Button",
+                    "id": "e0782e89-15f0-4102-88bb-27ed799d1a84",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MousePosition",
+                    "type": "Value",
+                    "id": "0e6034d0-0d85-4211-bf96-72e99b23821c",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8a06a9a9-9879-40e1-b66e-e1232b88ee15",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MouseButtonDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d4c704ae-5bde-4ac3-8ad5-bc738358a1f3",
+                    "path": "<Mouse>/{Point}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MousePosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
