@@ -1,9 +1,4 @@
 using System;
-using System.Collections.Generic;
-using NUnit.Framework.Internal;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.InputSystem;
 // using UnityEngine.UI;
@@ -17,7 +12,7 @@ public class TestManager : MonoBehaviour
     VisualElement start_menu;
     VisualElement results_menu;
 
-    [SerializeField] TestResult results;
+    [SerializeField] TestResultVisualization results;
 
     Button start_button;
 
@@ -37,12 +32,12 @@ public class TestManager : MonoBehaviour
     Vector2 last_mouse_position = Vector2.zero;
 
     void Start()
-    {   
+    {
         // Link start menu
         start_menu = start_menu_document.rootVisualElement.Q<VisualElement>("StartMenuContainer");
         start_button = start_menu.Q<Button>("StartButton");
         start_button.clicked += OnTestBegin;
-        
+
         // Link results menu
         results_menu = results_menu_document.rootVisualElement;
         results_menu.style.opacity = 0;
@@ -52,16 +47,16 @@ public class TestManager : MonoBehaviour
         OnResultsOpacityChanged += SetResultsOpacity;
 
         on_test_finished += OnTestFinished;
-    }   
+    }
 
     void Update()
     {
-        trail_renderer.enabled = trail_making_test.IsReady; 
-        if(trail_making_test.IsReady)
+        trail_renderer.enabled = trail_making_test.IsReady;
+        if (trail_making_test.IsReady)
         {
             trail_renderer.transform.position = last_mouse_position;
         }
-    } 
+    }
 
     void OnTestBegin()
     {
@@ -74,7 +69,7 @@ public class TestManager : MonoBehaviour
     public void OnTestFinished()
     {
         Debug.Log("Finishing TMT");
-        
+
         // Disable test
         trail_making_test.Active = false;
         trail_making_test.IsReady = false;
@@ -88,16 +83,20 @@ public class TestManager : MonoBehaviour
 
     void ShowResults()
     {
-        results.Evaluate(trail_making_test.samples);
+        Evaluator evaluator = new(trail_making_test.Samples, trail_making_test.Clicks, trail_making_test.Targets);
+        results.SpeedGraph = evaluator.GetSpeedGraph();
+        results.Clicks = evaluator.GetClicks();
+        results.Duration = (((int)(evaluator.GetTestDuration() * 100)) / 100f).ToString() + " s";
+        results.Correct = (((int)(evaluator.GetCorrectness() * 10000)) / 100f).ToString() + "%";
+        results.Score = (((int)(evaluator.GetScore() * 100)) / 100f).ToString();
+        results.AccelerationGraph = evaluator.GetAccelerationGraph();
     }
-
-
 
     void SetMenuOpactity(float value)
     {
         start_menu.style.opacity = value;
 
-        if(value == 0)
+        if (value == 0)
             start_menu_document.enabled = false;
     }
 
@@ -130,45 +129,35 @@ public class TestManager : MonoBehaviour
     {
         _keybinds.TrailMakingTest.MousePosition.performed += ProcessInput;
         _keybinds.TrailMakingTest.MouseButtonDown.performed += OnFirePerformed;
-        _keybinds.TrailMakingTest.MouseButtonDown.canceled += OnFireCancelled;
     }
 
     void UnsubscribeEvents()
     {
         _keybinds.TrailMakingTest.MousePosition.performed -= ProcessInput;
         _keybinds.TrailMakingTest.MouseButtonDown.performed -= OnFirePerformed;
-        _keybinds.TrailMakingTest.MouseButtonDown.canceled -= OnFireCancelled;
     }
-    
+
     void OnFirePerformed(InputAction.CallbackContext context)
     {
-        fire_down = true;
-
-        if(trail_making_test.IsReady && !trail_making_test.Active)
+        if (trail_making_test.IsReady && !trail_making_test.Active)
             trail_making_test.Active = true;
 
-        if(!trail_making_test.Active)
+        if (!trail_making_test.Active)
             return;
 
-        Sample sample = new(last_mouse_position, context.startTime, fire_down);
-        trail_making_test.AddSample(sample);
+        Sample click = new(last_mouse_position, Time.realtimeSinceStartupAsDouble, true);
+        trail_making_test.AddClick(click);
     }
 
-    void OnFireCancelled(InputAction.CallbackContext context)
-    {
-        fire_down = false;
-    }
-    
     void ProcessInput(InputAction.CallbackContext context)
     {
-
         Vector2 screen_point = context.ReadValue<Vector2>();
         last_mouse_position = Camera.main.ScreenToWorldPoint(screen_point);
 
-        if(!trail_making_test.Active)
+        if (!trail_making_test.Active)
             return;
 
-        Sample sample = new(last_mouse_position, context.startTime, fire_down);
+        Sample sample = new(last_mouse_position, Time.realtimeSinceStartupAsDouble, false);
         trail_making_test.AddSample(sample);
     }
 }

@@ -755,8 +755,10 @@ MonoBehaviour:
   _targetPrefab: {fileID: 1791008798883971417, guid: 70d01911686ad4f4c9a47b2ffcf0986a, type: 3}
   _test_manager: {fileID: 1915893059}
   _targetParent: {fileID: 1872751763}
+  TargetCount: 25
   IsReady: 0
   Active: 0
+  Targets: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

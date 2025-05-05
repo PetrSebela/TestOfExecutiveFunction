@@ -1,5 +1,41 @@
 .hidden {
     background-color: rgba(255, 255, 255, 0);
-    opacity: 0 !important;
-    transition-duration: 0.25s !important;
+    opacity: 0;
+    transition-duration: 0.25s;
+}
+
+.header {
+}
+
+.sub_header {
+}
+
+.normal {
+    margin-left: 48px;
+    font-size: 18px;
+}
+
+.result {
+    -unity-text-align: middle-left;
+    flex-direction: row;
+    flex-grow: initial;
+    flex-shrink: 0;
+    align-content: stretch;
+    align-self: stretch;
+    justify-content: space-between;
+}
+
+.button {
+    background-color: rgb(193, 250, 190);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 16px;
+    border: 0;
+    background-size: 100% 100%;
+    width: 50%;
+    outline: 0;
+    height: 45px;
+    -unity-font-definition: url("project://database/Assets/Graphics/Fonts/Lato/Lato-Regular.ttf?fileID=12800000&guid=18a9aadc16048f6fda598eba30223ec1&type=3#Lato-Regular");
+    font-size: 18px;
 }

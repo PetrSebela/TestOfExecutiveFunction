@@ -2,9 +2,7 @@ using TMPro;
 using UnityEngine;
 using System;
 using System.Collections.Generic;
-using UnityEngine.UIElements;
-using Unity.VisualScripting;
-using System.Security.Cryptography;
+using UnityEngine.UI;
 
 public class Target : MonoBehaviour
 {
@@ -13,6 +11,9 @@ public class Target : MonoBehaviour
     [SerializeField] TMP_Text label;
     [SerializeField] CanvasGroup canvas_group;
 
+    [SerializeField] Image fill;
+    [SerializeField] Image outline;
+    
     public bool CanBeClicked = true;
 
     public int id = -1;
@@ -23,10 +24,12 @@ public class Target : MonoBehaviour
         on_alpha_change += OnAlphaChange;
     }
 
-    public void SetOrder(int id, string text)
+    public void Init(int id, string text, Color primary, Color secondary)
     {
         this.id = id;
         label.text = text;
+        fill.color = primary;
+        outline.color = secondary;
     }
 
     public void SetRandomPosition(Transform parent, List<Target> forbidden)
