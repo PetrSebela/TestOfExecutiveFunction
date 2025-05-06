@@ -10,8 +10,11 @@ public class TestResultVisualization : ScriptableObject
 
     public double[] Clicks = new double[0]; 
 
+    public double[] Data = new double[0]; 
+
     public string Score = "0";
     public string Duration = "0ms";
     public string Correct = "0/0";
+    public string Sureness = "0";
 
 }

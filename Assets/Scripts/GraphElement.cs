@@ -55,6 +55,20 @@ public partial class GraphElement : VisualElement
         }
     }
 
+    [SerializeField, DontCreateProperty]
+    double[] _data = new double[0];
+
+    [UxmlAttribute, CreateProperty]
+    public double[] Data
+    {
+        get => _data;
+        set
+        {
+            _data = value;
+            MarkDirtyRepaint();
+        }
+    }
+
     public GraphElement()
     {
         generateVisualContent += GenerateVisualContent;
@@ -99,6 +113,19 @@ public partial class GraphElement : VisualElement
         foreach (double click_time in Clicks)
         {
             double scaled_x = click_time / duration * width + start_offset;
+            Vector2 bottom = new((float)scaled_x , 0);
+            Vector2 top = new((float)scaled_x, height);
+
+            painter.BeginPath();
+            painter.MoveTo(bottom);
+            painter.LineTo(top);
+            painter.Stroke();
+        }
+
+        painter.strokeColor = Color.red;
+        foreach (double data in Data)
+        {
+            double scaled_x = data / duration * width + start_offset;
             Vector2 bottom = new((float)scaled_x , 0);
             Vector2 top = new((float)scaled_x, height);
 

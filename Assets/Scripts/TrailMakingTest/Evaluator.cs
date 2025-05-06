@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.VisualScripting;
 
 public class Evaluator
 {
@@ -20,6 +21,8 @@ public class Evaluator
 
         Debug.LogFormat("Test duration {0}", GetTestDuration());
         Debug.LogFormat("Correctness {0}", GetCorrectness());
+        Debug.LogFormat("Correctness {0}", GetCorrectness());
+        Debug.LogFormat("Surness {0}", GetConfidence());
     }
 
     public double GetTestDuration()
@@ -29,8 +32,38 @@ public class Evaluator
 
     public double GetScore()
     {
-        double score = targets.Count * 1.2f / GetTestDuration() * GetCorrectness() * 100;
+        double score = targets.Count * 1.5f / GetTestDuration() * GetCorrectness() * GetConfidence() * 100;
         return score;
+    }
+
+    public double GetConfidence()
+    {
+        List<Vector2> speed = new(GetSpeedGraph());
+        List<double> peaks = GetPeakApproximation(speed);
+
+        double confidence = 0;
+
+        for (int i = 1; i < clicks.Count; i++)
+        {
+            double epoch_start = clicks[i - 1].time_stamp - begin_time;
+            double epoch_end = clicks[i].time_stamp- begin_time;
+
+            int count = 0;
+
+            foreach (double peak in peaks)
+                if(peak > epoch_start && peak < epoch_end)
+                    count++;
+
+            if(count <= 1)
+            {
+                confidence += 1;
+                continue;
+            }
+
+            confidence += 0.5f/count + 0.5f; // Confidence will never go below 0.5 (might as well be random before then, this will hopefully motivate the user to keep trying)
+        }
+
+        return confidence / (clicks.Count - 1);
     }
 
     /// <summary>
@@ -52,11 +85,10 @@ public class Evaluator
                     correct++;
 
                 current = target.id;
-                Debug.LogFormat("current {0} crrect {1}", current, correct);
             }
         }
 
-        Debug.LogFormat("Correct: {0}", correct);
+        
 
         return correct / targets.Count;
     }
@@ -185,5 +217,72 @@ public class Evaluator
         }
 
         return data;
+    }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    public static List<double> GetPeakApproximation(List<Vector2> data)
+    {
+        List<double> peaks = new();
+        int FRAME_RADIUS = 25;
+        int SIZE = FRAME_RADIUS * 2 + 1;
+
+        // Peak detection
+        for (int i = FRAME_RADIUS; i < data.Count - FRAME_RADIUS; i++)
+        {
+            float sum = 0;
+            for (int j = -FRAME_RADIUS; j < FRAME_RADIUS; j++)
+                sum += data[i - j].y;            
+            float mean = sum / SIZE;
+            
+
+            float ss = 0;
+            for (int j = -FRAME_RADIUS; j < FRAME_RADIUS; j++)
+                ss += Mathf.Pow(data[i - j].y - mean, 2);
+
+            float stdev = Mathf.Sqrt(ss / (SIZE - 1));
+
+            float local_z_score = (data[i].y - mean) / stdev;
+
+            if(local_z_score <= 0.5f)
+                continue;
+
+            peaks.Add(data[i].x);
+        }
+
+        // Clustering
+
+        List<double> clusters = new();
+
+        List<double> cluster = new();
+        
+        double EPSILON = 0.125f;
+
+        for (int i = 0; i < peaks.Count; i++)
+        {
+            double sum = 0;
+            foreach (double item in cluster)
+                sum += item;
+
+            double kernel = sum / cluster.Count;
+
+
+            if(Mathf.Abs((float)(kernel - peaks[i])) < EPSILON)
+            {
+                cluster.Add(peaks[i]);
+            }
+            else
+            {
+                clusters.Add(kernel);
+                cluster.Clear();
+                cluster.Add(peaks[i]);
+            }
+        }
+
+        return clusters;
     }
 }

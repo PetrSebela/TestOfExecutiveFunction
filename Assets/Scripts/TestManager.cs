@@ -86,10 +86,15 @@ public class TestManager : MonoBehaviour
         Evaluator evaluator = new(trail_making_test.Samples, trail_making_test.Clicks, trail_making_test.Targets);
         results.SpeedGraph = evaluator.GetSpeedGraph();
         results.Clicks = evaluator.GetClicks();
+        // debug
+
+        results.Data = Evaluator.GetPeakApproximation(new System.Collections.Generic.List<Vector2>(results.SpeedGraph)).ToArray();
+
         results.Duration = (((int)(evaluator.GetTestDuration() * 100)) / 100f).ToString() + " s";
         results.Correct = (((int)(evaluator.GetCorrectness() * 10000)) / 100f).ToString() + "%";
         results.Score = (((int)(evaluator.GetScore() * 100)) / 100f).ToString();
         results.AccelerationGraph = evaluator.GetAccelerationGraph();
+        results.Sureness = ((int)(evaluator.GetConfidence() * 100)).ToString() + "%";
     }
 
     void SetMenuOpactity(float value)

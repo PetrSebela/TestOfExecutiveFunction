@@ -1,61 +1,62 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/TMTMenu.uss?fileID=7433441132597879392&amp;guid=e5bb07f9ff6fa03fd985b661b6ec87a0&amp;type=3#TMTMenu" />
     <engine:VisualElement name="Root" style="flex-grow: 1; max-height: initial; max-width: initial; align-self: center; align-content: center; justify-content: center; align-items: center; width: 100%; transition-duration: 0.25s; transition-property: opacity; border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px;">
-        <engine:VisualElement name="Container" enabled="true" style="flex-grow: 1; position: relative; align-items: center; justify-content: center; align-self: center; align-content: stretch; background-color: rgb(255, 255, 255); max-height: 90%; height: auto; min-width: auto; max-width: initial; width: 90%; border-top-left-radius: 16px; border-top-right-radius: 16px; border-bottom-right-radius: 16px; border-bottom-left-radius: 16px; min-height: auto; -unity-text-outline-color: rgba(0, 0, 0, 0); flex-direction: row; padding-top: 64px; padding-right: 64px; padding-bottom: 64px; padding-left: 64px; flex-basis: auto;">
-            <engine:VisualElement name="Evaluation" style="flex-grow: 1; width: 50%; height: 100%;">
-                <engine:VisualElement name="Summary" style="flex-grow: 1; height: 10%;">
-                    <engine:Label text="You compleated the test" name="Congrats" style="font-size: 48px; -unity-font-definition: url(&quot;project://database/Assets/Graphics/Fonts/Lato/Lato-Black.ttf?fileID=12800000&amp;guid=85997cdeefe1a5b24b87265a97710b77&amp;type=3#Lato-Black&quot;); -unity-text-align: middle-center; margin-bottom: 32px;" />
-                    <engine:VisualElement name="ScoreContainer" class="result" style="flex-grow: 1;">
-                        <engine:Label text="Your Score is:" name="ScoreLable" class="normal" />
-                        <engine:Label text="0000" name="Score" class="normal">
-                            <Bindings>
-                                <engine:DataBinding property="text" data-source-path="Score" data-source="project://database/Assets/UI/TestResult.asset?fileID=11400000&amp;guid=3f6f35be0ba697c2ca6b657531cb47d8&amp;type=2#TestResult" binding-mode="ToTarget" />
-                            </Bindings>
-                        </engine:Label>
-                    </engine:VisualElement>
-                    <engine:VisualElement name="TestTime" class="result" style="flex-grow: 1;">
-                        <engine:Label text="You took:" name="TimeLabel" class="normal" />
-                        <engine:Label text="0s" name="Time" class="normal">
-                            <Bindings>
-                                <engine:DataBinding property="text" data-source-path="Duration" data-source="project://database/Assets/UI/TestResult.asset?fileID=11400000&amp;guid=3f6f35be0ba697c2ca6b657531cb47d8&amp;type=2#TestResult" binding-mode="ToTarget" />
-                            </Bindings>
-                        </engine:Label>
-                    </engine:VisualElement>
-                    <engine:VisualElement name="Corectness" class="result" style="flex-grow: 1;">
-                        <engine:Label text="You Correctly connected" name="ConnectedLabel" class="normal" />
-                        <engine:Label text="0/0" name="Connect" class="normal">
-                            <Bindings>
-                                <engine:DataBinding property="text" data-source-path="Correct" data-source="project://database/Assets/UI/TestResult.asset?fileID=11400000&amp;guid=3f6f35be0ba697c2ca6b657531cb47d8&amp;type=2#TestResult" binding-mode="ToTarget" />
-                            </Bindings>
-                        </engine:Label>
+        <engine:VisualElement name="Container" enabled="true" style="flex-grow: 1; position: relative; align-items: center; justify-content: center; align-self: center; align-content: stretch; background-color: rgb(255, 255, 255); max-height: 90%; height: auto; min-width: auto; max-width: initial; width: 90%; border-top-left-radius: 16px; border-top-right-radius: 16px; border-bottom-right-radius: 16px; border-bottom-left-radius: 16px; min-height: auto; -unity-text-outline-color: rgba(0, 0, 0, 0); flex-direction: column; padding-top: 64px; padding-right: 64px; padding-bottom: 64px; padding-left: 64px; flex-basis: auto;">
+            <engine:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; width: 100%; height: 50%; margin-top: 0; margin-right: 0; margin-bottom: 5%; margin-left: 0;">
+                <engine:VisualElement name="Evaluation" style="flex-grow: 1; width: 50%; height: 100%;">
+                    <engine:VisualElement name="Summary" style="flex-grow: 1; height: 80%;">
+                        <engine:Label text="Test compleated!" name="Congrats" style="font-size: 48px; -unity-font-definition: url(&quot;project://database/Assets/Graphics/Fonts/Lato/Lato-Black.ttf?fileID=12800000&amp;guid=85997cdeefe1a5b24b87265a97710b77&amp;type=3#Lato-Black&quot;); -unity-text-align: middle-center; margin-bottom: 32px;" />
+                        <engine:VisualElement name="ScoreContainer" class="result" style="flex-grow: 1;">
+                            <engine:Label text="Your Score is:" name="ScoreLable" class="normal" />
+                            <engine:Label text="0000" name="Score" class="normal">
+                                <Bindings>
+                                    <engine:DataBinding property="text" data-source-path="Score" data-source="project://database/Assets/UI/TestResult.asset?fileID=11400000&amp;guid=3f6f35be0ba697c2ca6b657531cb47d8&amp;type=2#TestResult" binding-mode="ToTarget" />
+                                </Bindings>
+                            </engine:Label>
+                        </engine:VisualElement>
+                        <engine:VisualElement name="TestTime" class="result" style="flex-grow: 1;">
+                            <engine:Label text="Duration:" name="TimeLabel" class="normal" />
+                            <engine:Label text="0s" name="Time" class="normal">
+                                <Bindings>
+                                    <engine:DataBinding property="text" data-source-path="Duration" data-source="project://database/Assets/UI/TestResult.asset?fileID=11400000&amp;guid=3f6f35be0ba697c2ca6b657531cb47d8&amp;type=2#TestResult" binding-mode="ToTarget" />
+                                </Bindings>
+                            </engine:Label>
+                        </engine:VisualElement>
+                        <engine:VisualElement name="Corectness" class="result" style="flex-grow: 1;">
+                            <engine:Label text="Correctly connected:" name="ConnectedLabel" class="normal" />
+                            <engine:Label text="0/0" name="Connect" class="normal">
+                                <Bindings>
+                                    <engine:DataBinding property="text" data-source-path="Correct" data-source="project://database/Assets/UI/TestResult.asset?fileID=11400000&amp;guid=3f6f35be0ba697c2ca6b657531cb47d8&amp;type=2#TestResult" binding-mode="ToTarget" />
+                                </Bindings>
+                            </engine:Label>
+                        </engine:VisualElement>
+                        <engine:VisualElement name="Sureness" class="result" style="flex-grow: 1;">
+                            <engine:Label text="Confidence:" name="ConnectedLabel" class="normal" />
+                            <engine:Label text="0/0" name="Connect" class="normal">
+                                <Bindings>
+                                    <engine:DataBinding property="text" data-source-path="Sureness" data-source="project://database/Assets/UI/TestResult.asset?fileID=11400000&amp;guid=3f6f35be0ba697c2ca6b657531cb47d8&amp;type=2#TestResult" binding-mode="ToTarget" />
+                                </Bindings>
+                            </engine:Label>
+                        </engine:VisualElement>
                     </engine:VisualElement>
                 </engine:VisualElement>
-                <engine:VisualElement name="Multipliers" style="flex-grow: 1;">
-                    <engine:VisualElement name="MultContainer" style="flex-grow: 1;" />
-                </engine:VisualElement>
-                <engine:VisualElement name="TryAgain" style="flex-grow: 1; height: 10px; max-height: 15%; align-content: stretch; justify-content: space-between; align-self: auto; align-items: center;">
-                    <engine:Button text="Try again" class="button" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
-                    <engine:Button text="Back to main menu" class="button" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+                <engine:VisualElement style="flex-grow: 1; width: 100px;" />
+                <engine:VisualElement name="graphs" style="flex-grow: 1; width: 50%; height: 100%;">
+                    <engine:VisualElement style="flex-grow: 1; align-content: flex-end; justify-content: flex-end;">
+                        <engine:Label text="Cursor speed" name="Speed" style="-unity-text-align: middle-center; font-size: 18px; -unity-font-definition: url(&quot;project://database/Assets/Graphics/Fonts/Lato/Lato-Regular.ttf?fileID=12800000&amp;guid=18a9aadc16048f6fda598eba30223ec1&amp;type=3#Lato-Regular&quot;); margin-bottom: 16px;" />
+                        <GraphElement name="SpeedGraph" id="132" middle_zero="false" pretty_finish="true" line_color="#484848FF" click_color="#88B2FFFF" start_offset="25" draw_zero_crossing="false" style="height: 300px; width: 100%; border-left-width: 2px; border-left-color: rgb(0, 0, 0); border-bottom-width: 2px; border-bottom-color: rgb(0, 0, 0); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;">
+                            <Bindings>
+                                <engine:DataBinding property="Points" data-source-path="SpeedGraph" data-source="project://database/Assets/UI/TestResult.asset?fileID=11400000&amp;guid=3f6f35be0ba697c2ca6b657531cb47d8&amp;type=2#TestResult" binding-mode="ToTarget" />
+                                <engine:DataBinding property="Clicks" data-source-path="Clicks" data-source="project://database/Assets/UI/TestResult.asset?fileID=11400000&amp;guid=3f6f35be0ba697c2ca6b657531cb47d8&amp;type=2#TestResult" binding-mode="ToTarget" />
+                                <engine:DataBinding property="Data" data-source-path="Data" data-source="project://database/Assets/UI/TestResult.asset?fileID=11400000&amp;guid=3f6f35be0ba697c2ca6b657531cb47d8&amp;type=2#TestResult" binding-mode="ToTarget" />
+                            </Bindings>
+                        </GraphElement>
+                    </engine:VisualElement>
                 </engine:VisualElement>
             </engine:VisualElement>
-            <engine:VisualElement style="flex-grow: 1; width: 100px;" />
-            <engine:VisualElement name="graphs" style="flex-grow: 1; width: 50%; height: 100%;">
-                <engine:VisualElement style="flex-grow: 1;">
-                    <engine:Label text="Cursor speed" name="Speed" style="-unity-text-align: middle-center; font-size: 18px; -unity-font-definition: url(&quot;project://database/Assets/Graphics/Fonts/Lato/Lato-Regular.ttf?fileID=12800000&amp;guid=18a9aadc16048f6fda598eba30223ec1&amp;type=3#Lato-Regular&quot;); margin-bottom: 16px;" />
-                    <GraphElement name="SpeedGraph" id="132" middle_zero="false" pretty_finish="true" line_color="#484848FF" click_color="#88B2FFFF" start_offset="25" draw_zero_crossing="false" style="height: 300px; width: 100%; border-left-width: 2px; border-left-color: rgb(0, 0, 0); border-bottom-width: 2px; border-bottom-color: rgb(0, 0, 0); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;">
-                        <Bindings>
-                            <engine:DataBinding property="Points" data-source-path="SpeedGraph" data-source="project://database/Assets/UI/TestResult.asset?fileID=11400000&amp;guid=3f6f35be0ba697c2ca6b657531cb47d8&amp;type=2#TestResult" binding-mode="ToTarget" />
-                            <engine:DataBinding property="Clicks" data-source-path="Clicks" data-source="project://database/Assets/UI/TestResult.asset?fileID=11400000&amp;guid=3f6f35be0ba697c2ca6b657531cb47d8&amp;type=2#TestResult" binding-mode="ToTarget" />
-                        </Bindings>
-                    </GraphElement>
-                    <engine:Label text="Cursor acceleration" name="Speed" style="-unity-text-align: middle-center; font-size: 18px; -unity-font-definition: url(&quot;project://database/Assets/Graphics/Fonts/Lato/Lato-Regular.ttf?fileID=12800000&amp;guid=18a9aadc16048f6fda598eba30223ec1&amp;type=3#Lato-Regular&quot;); margin-bottom: 16px; margin-top: 32px;" />
-                    <GraphElement name="SpeedGraph" id="132" middle_zero="true" pretty_finish="true" line_color="#484848FF" click_color="#88B2FFFF" start_offset="25" draw_zero_crossing="true" style="height: 300px; width: 100%; border-left-width: 2px; border-left-color: rgb(0, 0, 0); border-bottom-width: 2px; border-bottom-color: rgb(0, 0, 0); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;">
-                        <Bindings>
-                            <engine:DataBinding property="Points" data-source-path="AccelerationGraph" data-source="project://database/Assets/UI/TestResult.asset?fileID=11400000&amp;guid=3f6f35be0ba697c2ca6b657531cb47d8&amp;type=2#TestResult" binding-mode="ToTarget" />
-                            <engine:DataBinding property="Clicks" data-source-path="Clicks" data-source="project://database/Assets/UI/TestResult.asset?fileID=11400000&amp;guid=3f6f35be0ba697c2ca6b657531cb47d8&amp;type=2#TestResult" binding-mode="ToTarget" />
-                        </Bindings>
-                    </GraphElement>
-                </engine:VisualElement>
+            <engine:VisualElement name="TryAgain" style="flex-grow: 1; height: 25%; max-height: 25%; align-content: stretch; justify-content: space-between; align-self: auto; align-items: center; width: 50%;">
+                <engine:Button text="Try again" class="button" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; width: 100%;" />
+                <engine:Button text="Back to main menu" class="button" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; width: 100%;" />
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>

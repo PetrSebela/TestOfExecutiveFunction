@@ -755,7 +755,7 @@ MonoBehaviour:
   _targetPrefab: {fileID: 1791008798883971417, guid: 70d01911686ad4f4c9a47b2ffcf0986a, type: 3}
   _test_manager: {fileID: 1915893059}
   _targetParent: {fileID: 1872751763}
-  TargetCount: 25
+  TargetCount: 10
   IsReady: 0
   Active: 0
   Targets: []
