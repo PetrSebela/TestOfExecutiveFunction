@@ -17,4 +17,6 @@ public class TestResultVisualization : ScriptableObject
     public string Correct = "0/0";
     public string Sureness = "0";
 
+    public string TestSize = "0";
+    public string ActiveModifier = "1x";
 }

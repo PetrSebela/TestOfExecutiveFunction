@@ -7,8 +7,8 @@
                     <engine:VisualElement name="Summary" style="flex-grow: 1; height: 80%;">
                         <engine:Label text="Test compleated!" name="Congrats" style="font-size: 48px; -unity-font-definition: url(&quot;project://database/Assets/Graphics/Fonts/Lato/Lato-Black.ttf?fileID=12800000&amp;guid=85997cdeefe1a5b24b87265a97710b77&amp;type=3#Lato-Black&quot;); -unity-text-align: middle-center; margin-bottom: 32px;" />
                         <engine:VisualElement name="ScoreContainer" class="result" style="flex-grow: 1;">
-                            <engine:Label text="Your Score is:" name="ScoreLable" class="normal" />
-                            <engine:Label text="0000" name="Score" class="normal">
+                            <engine:Label text="Total score:" name="ScoreLable" class="normal" style="-unity-font-style: bold;" />
+                            <engine:Label text="0000" name="Score" class="normal" style="-unity-font-style: bold-and-italic;">
                                 <Bindings>
                                     <engine:DataBinding property="text" data-source-path="Score" data-source="project://database/Assets/UI/TestResult.asset?fileID=11400000&amp;guid=3f6f35be0ba697c2ca6b657531cb47d8&amp;type=2#TestResult" binding-mode="ToTarget" />
                                 </Bindings>
@@ -16,7 +16,7 @@
                         </engine:VisualElement>
                         <engine:VisualElement name="TestTime" class="result" style="flex-grow: 1;">
                             <engine:Label text="Duration:" name="TimeLabel" class="normal" />
-                            <engine:Label text="0s" name="Time" class="normal">
+                            <engine:Label text="0s" name="Time" class="normal" style="-unity-font-style: italic;">
                                 <Bindings>
                                     <engine:DataBinding property="text" data-source-path="Duration" data-source="project://database/Assets/UI/TestResult.asset?fileID=11400000&amp;guid=3f6f35be0ba697c2ca6b657531cb47d8&amp;type=2#TestResult" binding-mode="ToTarget" />
                                 </Bindings>
@@ -24,7 +24,7 @@
                         </engine:VisualElement>
                         <engine:VisualElement name="Corectness" class="result" style="flex-grow: 1;">
                             <engine:Label text="Correctly connected:" name="ConnectedLabel" class="normal" />
-                            <engine:Label text="0/0" name="Connect" class="normal">
+                            <engine:Label text="0/0" name="Connect" class="normal" style="-unity-font-style: italic;">
                                 <Bindings>
                                     <engine:DataBinding property="text" data-source-path="Correct" data-source="project://database/Assets/UI/TestResult.asset?fileID=11400000&amp;guid=3f6f35be0ba697c2ca6b657531cb47d8&amp;type=2#TestResult" binding-mode="ToTarget" />
                                 </Bindings>
@@ -32,9 +32,25 @@
                         </engine:VisualElement>
                         <engine:VisualElement name="Sureness" class="result" style="flex-grow: 1;">
                             <engine:Label text="Confidence:" name="ConnectedLabel" class="normal" />
-                            <engine:Label text="0/0" name="Connect" class="normal">
+                            <engine:Label text="0/0" name="Connect" class="normal" style="-unity-font-style: italic;">
                                 <Bindings>
                                     <engine:DataBinding property="text" data-source-path="Sureness" data-source="project://database/Assets/UI/TestResult.asset?fileID=11400000&amp;guid=3f6f35be0ba697c2ca6b657531cb47d8&amp;type=2#TestResult" binding-mode="ToTarget" />
+                                </Bindings>
+                            </engine:Label>
+                        </engine:VisualElement>
+                        <engine:VisualElement name="Sureness" class="result" style="flex-grow: 1;">
+                            <engine:Label text="Test size:" name="ConnectedLabel" class="normal" />
+                            <engine:Label text="0/0" name="Connect" class="normal" style="-unity-font-style: italic;">
+                                <Bindings>
+                                    <engine:DataBinding property="text" data-source-path="TestSize" data-source="project://database/Assets/UI/TestResult.asset?fileID=11400000&amp;guid=3f6f35be0ba697c2ca6b657531cb47d8&amp;type=2#TestResult" binding-mode="ToTarget" />
+                                </Bindings>
+                            </engine:Label>
+                        </engine:VisualElement>
+                        <engine:VisualElement name="Sureness" class="result" style="flex-grow: 1;">
+                            <engine:Label text="Hidden modifier:" name="ConnectedLabel" class="normal" />
+                            <engine:Label text="0/0" name="Connect" class="normal" style="-unity-font-style: italic;">
+                                <Bindings>
+                                    <engine:DataBinding property="text" data-source-path="ActiveModifier" data-source="project://database/Assets/UI/TestResult.asset?fileID=11400000&amp;guid=3f6f35be0ba697c2ca6b657531cb47d8&amp;type=2#TestResult" binding-mode="ToTarget" />
                                 </Bindings>
                             </engine:Label>
                         </engine:VisualElement>
@@ -55,8 +71,8 @@
                 </engine:VisualElement>
             </engine:VisualElement>
             <engine:VisualElement name="TryAgain" style="flex-grow: 1; height: 25%; max-height: 25%; align-content: stretch; justify-content: space-between; align-self: auto; align-items: center; width: 50%;">
-                <engine:Button text="Try again" class="button" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; width: 100%;" />
-                <engine:Button text="Back to main menu" class="button" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; width: 100%;" />
+                <engine:Button text="Try again" name="TryAgain" class="button" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; width: 100%; transition-duration: 0.125s;" />
+                <engine:Button text="Back to main menu" name="BackToMainMenu" class="button" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; width: 100%; transition-duration: 0.125s;" />
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>

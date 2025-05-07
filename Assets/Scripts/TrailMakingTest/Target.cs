@@ -32,12 +32,17 @@ public class Target : MonoBehaviour
         outline.color = secondary;
     }
 
+    public void HideText()
+    {
+        label.text = "";
+    }
+
     public void SetRandomPosition(Transform parent, List<Target> forbidden)
     {
         transform.SetParent(parent);
 
         bool invalid_position = true;
-        int attempts_left = 100;
+        int attempts_left = 200;
         while (invalid_position && attempts_left > 0)
         {
             transform.localPosition = new(UnityEngine.Random.Range(-1920 + PADDING, 1920 - PADDING) / 2, UnityEngine.Random.Range(-1080 + PADDING, 1080 - PADDING) / 2, 0);
@@ -45,7 +50,7 @@ public class Target : MonoBehaviour
             bool has_collision = false;
 
             foreach (Target t in forbidden)
-                if(Vector3.Distance(t.transform.localPosition, transform.localPosition) < 200)
+                if(Vector3.Distance(t.transform.localPosition, transform.localPosition) < 225)
                     has_collision = true;
 
             attempts_left--;

@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+
 // using UnityEngine.UI;
 using UnityEngine.UIElements;
 
@@ -16,6 +18,10 @@ public class TestManager : MonoBehaviour
 
     Button start_button;
 
+    Button retry_button;
+    Button btmm_button;
+
+
     [SerializeField] TrailRenderer trail_renderer;
 
     [SerializeField] TrailMakingTest trail_making_test;
@@ -27,8 +33,6 @@ public class TestManager : MonoBehaviour
 
     public Action on_test_finished;
 
-    bool fire_down = false;
-
     Vector2 last_mouse_position = Vector2.zero;
 
     void Start()
@@ -38,10 +42,20 @@ public class TestManager : MonoBehaviour
         start_button = start_menu.Q<Button>("StartButton");
         start_button.clicked += OnTestBegin;
 
+
         // Link results menu
         results_menu = results_menu_document.rootVisualElement;
-        results_menu.style.opacity = 0;
-        results_menu_document.enabled = false;
+        
+        btmm_button = results_menu.Q<Button>("BackToMainMenu");
+        btmm_button.clicked += ToMainMenu;
+        
+        retry_button = results_menu.Q<Button>("TryAgain");
+        retry_button.clicked += Repeat;
+        results_menu.visible = false;
+
+        // results_menu.style.opacity = 0;
+        // results_menu_document.enabled = false;
+        
 
         OnMenuOpacityChanged += SetMenuOpactity;
         OnResultsOpacityChanged += SetResultsOpacity;
@@ -53,15 +67,16 @@ public class TestManager : MonoBehaviour
     {
         trail_renderer.enabled = trail_making_test.IsReady;
         if (trail_making_test.IsReady)
-        {
             trail_renderer.transform.position = last_mouse_position;
-        }
     }
 
     void OnTestBegin()
     {
         Debug.Log("Starting TMT");
         LeanTween.value(gameObject, OnMenuOpacityChanged, 1, 0, 0.25f);
+        trail_making_test.TargetCount = start_menu.Q<SliderInt>("TestSize").value;
+        trail_making_test.HiddenVariant = start_menu.Q<Toggle>("Hidden").value;
+        
         trail_making_test.GenerateTargets();
         trail_making_test.IsReady = true;
     }
@@ -78,15 +93,15 @@ public class TestManager : MonoBehaviour
         ShowResults();
 
         // Show results
-        LeanTween.value(gameObject, OnResultsOpacityChanged, 0, 1, 0.25f);
+        // LeanTween.value(gameObject, OnResultsOpacityChanged, 0, 1, 0.25f);
+        results_menu.visible = true;
     }
 
     void ShowResults()
     {
-        Evaluator evaluator = new(trail_making_test.Samples, trail_making_test.Clicks, trail_making_test.Targets);
+        Evaluator evaluator = new(trail_making_test.Samples, trail_making_test.Clicks, trail_making_test.Targets, trail_making_test.HiddenVariant);
         results.SpeedGraph = evaluator.GetSpeedGraph();
         results.Clicks = evaluator.GetClicks();
-        // debug
 
         results.Data = Evaluator.GetPeakApproximation(new System.Collections.Generic.List<Vector2>(results.SpeedGraph)).ToArray();
 
@@ -95,6 +110,9 @@ public class TestManager : MonoBehaviour
         results.Score = (((int)(evaluator.GetScore() * 100)) / 100f).ToString();
         results.AccelerationGraph = evaluator.GetAccelerationGraph();
         results.Sureness = ((int)(evaluator.GetConfidence() * 100)).ToString() + "%";
+
+        results.TestSize = trail_making_test.TargetCount.ToString();
+        results.ActiveModifier = evaluator.GetModifiers().ToString() + "x";
     }
 
     void SetMenuOpactity(float value)
@@ -107,8 +125,13 @@ public class TestManager : MonoBehaviour
 
     void SetResultsOpacity(float value)
     {
-        results_menu_document.enabled = true;
+        if(!results_menu_document.enabled)
+            results_menu_document.enabled = true;
+        
         results_menu.style.opacity = value;
+        btmm_button.clicked += ToMainMenu;
+        retry_button.clicked += Repeat;
+        Debug.Log(value);
     }
 
     // === Input management ===
@@ -145,7 +168,10 @@ public class TestManager : MonoBehaviour
     void OnFirePerformed(InputAction.CallbackContext context)
     {
         if (trail_making_test.IsReady && !trail_making_test.Active)
+        {
             trail_making_test.Active = true;
+            trail_making_test.OnTestBegin();
+        }
 
         if (!trail_making_test.Active)
             return;
@@ -164,5 +190,17 @@ public class TestManager : MonoBehaviour
 
         Sample sample = new(last_mouse_position, Time.realtimeSinceStartupAsDouble, false);
         trail_making_test.AddSample(sample);
+    }
+
+    void ToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+        Debug.Log("main menu");
+    }
+
+    void Repeat()
+    {
+        SceneManager.LoadScene("TrailMakingTest");
+        Debug.Log("repeat");
     }
 }

@@ -8,7 +8,9 @@ public class TrailMakingTest : MonoBehaviour
     [SerializeField] TestManager _test_manager;
     [SerializeField] Transform _targetParent;
 
-    [SerializeField] int TargetCount = 6;
+    [Header("Test settings")]
+    public int TargetCount = 6;
+    public bool HiddenVariant = false;
 
     public bool IsReady = false;
     public bool Active = false;
@@ -17,20 +19,34 @@ public class TrailMakingTest : MonoBehaviour
     public List<Sample> Samples = new();
     public List<Target> Targets = new();
 
+    public void OnTestBegin()
+    {
+
+        if(!HiddenVariant)
+            return;
+
+        foreach (Target target in Targets)
+            target.HideText();
+    }
+
     public void GenerateTargets()
     {
         IsReady = true;
 
-
         for (int i = 0; i < TargetCount; i++)
         {
+            // Position
             GameObject target_object = Instantiate(_targetPrefab);
             Target target = target_object.GetComponent<Target>();
             target.SetRandomPosition(_targetParent, Targets);
 
-            Color primary_color = Color.HSVToRGB( (float)i / TargetCount , 0.3f, 1);
-            Color secondary_color = Color.HSVToRGB( (float)i / TargetCount , 0.4f, 0.6f);
+            float color_hue = Random.value;
 
+            // Target colors
+            Color primary_color = Color.HSVToRGB( color_hue, 0.3f, 1);
+            Color secondary_color = Color.HSVToRGB( color_hue, 0.4f, 0.6f);
+
+            // Init target
             target.Init(i, (i + 1).ToString(), primary_color, secondary_color);
 
             Targets.Add(target);

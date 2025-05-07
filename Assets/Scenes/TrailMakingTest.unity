@@ -502,7 +502,7 @@ MonoBehaviour:
   m_PanelSettings: {fileID: 11400000, guid: 8129cee91b1d66f60a563356a9089708, type: 2}
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: a9d56274c6addee24bc8db2a53c2fdbc, type: 3}
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920
   m_WorldSpaceHeight: 1080
@@ -756,6 +756,7 @@ MonoBehaviour:
   _test_manager: {fileID: 1915893059}
   _targetParent: {fileID: 1872751763}
   TargetCount: 10
+  HiddenVariant: 0
   IsReady: 0
   Active: 0
   Targets: []

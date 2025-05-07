@@ -8,15 +8,17 @@ public class Evaluator
     List<Sample> samples;
     List<Sample> clicks;
     List<Target> targets;
+    bool hidden_variant;
 
     double begin_time = 0;
 
-    public Evaluator(List<Sample> samples, List<Sample> clicks,  List<Target> targets)
+    public Evaluator(List<Sample> samples, List<Sample> clicks,  List<Target> targets, bool hidden_variant)
     {
         this.samples = samples;
         this.clicks = clicks;
         this.targets = targets;
-    
+        this.hidden_variant = hidden_variant;
+        
         begin_time = clicks[0].time_stamp;
 
         Debug.LogFormat("Test duration {0}", GetTestDuration());
@@ -32,8 +34,13 @@ public class Evaluator
 
     public double GetScore()
     {
-        double score = targets.Count * 1.5f / GetTestDuration() * GetCorrectness() * GetConfidence() * 100;
+        double score = targets.Count * 1.5f / GetTestDuration() * GetCorrectness() * GetConfidence() * GetModifiers() * 100;
         return score;
+    }
+
+    public double GetModifiers()
+    {
+        return hidden_variant ? Mathf.Pow(1.1f, targets.Count) : 1;
     }
 
     public double GetConfidence()
@@ -190,7 +197,6 @@ public class Evaluator
         // Remove outliers
         int removed = data.RemoveAll( point => Mathf.Abs(point.y) > 3);
 
-        Debug.LogFormat("Removed during normalization: {0}", removed);
         return data;
     }
 
@@ -264,20 +270,20 @@ public class Evaluator
 
         for (int i = 0; i < peaks.Count; i++)
         {
-            double sum = 0;
+            double cluster_mean = 0;
             foreach (double item in cluster)
-                sum += item;
+                cluster_mean += item;
 
-            double kernel = sum / cluster.Count;
+            cluster_mean /= cluster.Count;
 
-
-            if(Mathf.Abs((float)(kernel - peaks[i])) < EPSILON)
+    
+            if(Mathf.Abs((float)(cluster_mean - peaks[i])) < EPSILON)
             {
                 cluster.Add(peaks[i]);
             }
             else
             {
-                clusters.Add(kernel);
+                clusters.Add(cluster_mean);
                 cluster.Clear();
                 cluster.Add(peaks[i]);
             }
