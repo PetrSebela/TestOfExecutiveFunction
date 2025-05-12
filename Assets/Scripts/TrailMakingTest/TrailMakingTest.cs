@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 /// <summary>
 /// Component for data collection during testing
@@ -32,6 +33,11 @@ public class TrailMakingTest : MonoBehaviour
     /// Flag signalizing use of hidden test variant
     /// </summary>
     public bool HiddenVariant = false;
+
+    /// <summary>
+    /// Flag signalizing use of aplha test variant
+    /// </summary>
+    public bool AlphaVariant = false;
 
     /// <summary>
     /// Flag signalizing if the test is ready to be started
@@ -89,8 +95,23 @@ public class TrailMakingTest : MonoBehaviour
             Color primary_color = Color.HSVToRGB( color_hue, 0.3f, 1);
             Color secondary_color = Color.HSVToRGB( color_hue, 0.4f, 0.6f);
 
-            // Init target
-            target.Init(i, (i + 1).ToString(), primary_color, secondary_color);
+            // Init targets
+            if(AlphaVariant)
+            {
+                string target_label = "";
+
+                if(i % 2 == 0)
+                    target_label = ((i + 2) / 2).ToString();
+                else
+                    target_label = ((char)('A' + i / 2)).ToString();
+
+                target.Init(i, target_label, primary_color, secondary_color);
+
+            }
+            else
+            {
+                target.Init(i, (i + 1).ToString(), primary_color, secondary_color);
+            }
 
             Targets.Add(target);
         }

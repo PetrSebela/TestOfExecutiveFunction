@@ -100,6 +100,7 @@ public class TestManager : MonoBehaviour
         LeanTween.value(gameObject, OnMenuOpacityChanged, 1, 0, 0.25f);
         trail_making_test.TargetCount = start_menu.Q<SliderInt>("TestSize").value;
         trail_making_test.HiddenVariant = start_menu.Q<Toggle>("Hidden").value;
+        trail_making_test.AlphaVariant = start_menu.Q<Toggle>("AlphaVariant").value;
         
         trail_making_test.GenerateTargets();
         trail_making_test.IsReady = true;
@@ -122,7 +123,7 @@ public class TestManager : MonoBehaviour
 
     void ShowResults()
     {
-        Evaluator evaluator = new(trail_making_test.Samples, trail_making_test.Clicks, trail_making_test.Targets, trail_making_test.HiddenVariant);
+        Evaluator evaluator = new(trail_making_test);
 
         TestResult result = evaluator.GetResult();
       

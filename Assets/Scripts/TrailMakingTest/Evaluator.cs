@@ -28,6 +28,12 @@ public class Evaluator
     bool hidden_variant;
 
     /// <summary>
+    /// Flag signalizing the use of alpha test variant
+    /// </summary>
+    bool alpha_variant;
+
+
+    /// <summary>
     /// Start time of the test (timestamp of the first click)
     /// </summary>
     double begin_time = 0;
@@ -39,12 +45,13 @@ public class Evaluator
     /// <param name="clicks">           Captured clicks                     </param>
     /// <param name="targets">          Used targets                        </param>
     /// <param name="hidden_variant">   Was the hidden test variant used    </param>
-    public Evaluator(List<Sample> samples, List<Sample> clicks,  List<Target> targets, bool hidden_variant)
+    public Evaluator(TrailMakingTest test)
     {
-        this.samples = samples;
-        this.clicks = clicks;
-        this.targets = targets;
-        this.hidden_variant = hidden_variant;
+        this.samples = test.Samples;
+        this.clicks = test.Clicks;
+        this.targets = test.Targets;
+        this.hidden_variant = test.HiddenVariant;
+        this.alpha_variant = test.AlphaVariant;
         
         begin_time = clicks[0].time_stamp;  // Test is stated by first clicks
 
@@ -95,7 +102,10 @@ public class Evaluator
     /// <returns> Sum of all used modifiers </returns>
     public double GetModifiers()
     {
-        return hidden_variant ? Mathf.Pow(1.1f, targets.Count) : 1;
+        float modifier = 1;
+        modifier *= hidden_variant ? Mathf.Pow(1.1f, targets.Count) : 1; 
+        modifier *= alpha_variant ? Mathf.Pow(1.05f, targets.Count) : 1; 
+        return modifier;
     }
 
     /// <summary>

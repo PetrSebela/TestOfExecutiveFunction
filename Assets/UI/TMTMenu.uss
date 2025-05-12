@@ -41,9 +41,11 @@
 }
 
 .button:hover {
-    background-color: rgb(184, 255, 247);
+    background-color: rgb(202, 255, 184);
     -unity-font-style: normal;
     scale: 1.05 1.05;
+    font-size: 30px;
+    color: rgb(0, 0, 0);
 }
 
 .button {
@@ -56,7 +58,40 @@
     background-size: 100% 100%;
     width: 50%;
     outline: 0;
-    height: 45px;
+    height: 60px;
     -unity-font-definition: url("project://database/Assets/Graphics/Fonts/Lato/Lato-Regular.ttf?fileID=12800000&guid=18a9aadc16048f6fda598eba30223ec1&type=3#Lato-Regular");
     font-size: 18px;
+    min-height: 80px;
+}
+
+.unity-toggle__checkmark {
+    border-radius: 8px;
+    background-color: rgb(255, 255, 255);
+}
+
+.unity-base-slider__dragger {
+    border-radius: 4px;
+}
+
+.unity-toggle__input {
+    justify-content: flex-end;
+}
+
+.unity-list-view__item:hover {
+    background-color: transparent;
+}
+
+.unity-scroller {
+    width: 0;
+    visibility: hidden;
+}
+
+.unity-base-slider__tracker {
+    border-radius: 2px;
+    background-color: rgb(187, 187, 187);
+}
+
+.unity-base-field__input {
+    border-radius: 4px;
+    background-color: rgb(255, 255, 255);
 }
