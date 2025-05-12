@@ -105,6 +105,8 @@ public class Evaluator
         float modifier = 1;
         modifier *= hidden_variant ? Mathf.Pow(1.1f, targets.Count) : 1; 
         modifier *= alpha_variant ? Mathf.Pow(1.05f, targets.Count) : 1; 
+
+        modifier = (int)(modifier * 100)/100f;
         return modifier;
     }
 
