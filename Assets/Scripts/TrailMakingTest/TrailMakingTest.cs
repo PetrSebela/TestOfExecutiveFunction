@@ -83,6 +83,9 @@ public class TrailMakingTest : MonoBehaviour
     {
         IsReady = true;
 
+        if(AlphaVariant)
+            TargetCount *= 2;
+
         for (int i = 0; i < TargetCount; i++)
         {
             // Position

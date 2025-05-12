@@ -60,7 +60,7 @@
     outline: 0;
     height: 60px;
     -unity-font-definition: url("project://database/Assets/Graphics/Fonts/Lato/Lato-Regular.ttf?fileID=12800000&guid=18a9aadc16048f6fda598eba30223ec1&type=3#Lato-Regular");
-    font-size: 18px;
+    font-size: 24px;
     min-height: 80px;
 }
 
@@ -94,4 +94,9 @@
 .unity-base-field__input {
     border-radius: 4px;
     background-color: rgb(255, 255, 255);
+}
+
+
+.unity-label {
+    font-size: 18px;
 }
