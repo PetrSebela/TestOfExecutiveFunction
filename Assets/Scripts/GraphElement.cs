@@ -1,35 +1,60 @@
-using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.Properties;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+
+/// <summary>
+/// Custom UI element for displaying graphs
+/// </summary>
 [UxmlElement]
 public partial class GraphElement : VisualElement
 {
-    [SerializeField, DontCreateProperty]
-    Vector2[] _points = new Vector2[0];
-
+    /// <summary>
+    /// Place graph zero at the middle line
+    /// </summary>
     [UxmlAttribute, CreateProperty]
     public bool middle_zero = false;
 
+    /// <summary>
+    /// Connect graph end to zero
+    /// </summary>
     [UxmlAttribute, CreateProperty]
     public bool pretty_finish = false;
 
+    /// <summary>
+    /// Draw line where graph crosses zero
+    /// </summary>    
     [UxmlAttribute, CreateProperty]
     public bool draw_zero_crossing = false;
 
-
+    /// <summary>
+    /// Graph x axis start offset
+    /// </summary>
     [UxmlAttribute, CreateProperty]
     public float start_offset = 10;
 
+    /// <summary>
+    /// Main graph line color
+    /// </summary>    
     [UxmlAttribute, CreateProperty]
     public Color line_color = Color.black;
 
+    /// <summary>
+    /// Graph click color
+    /// </summary>
     [UxmlAttribute, CreateProperty]
     public Color click_color = Color.red;
+  
+    /// <summary>
+    /// Stored graph points
+    /// </summary>  
+    [SerializeField, DontCreateProperty]
+    Vector2[] _points = new Vector2[0];
 
+    /// <summary>
+    /// Graph points interface
+    /// </summary>
     [UxmlAttribute, CreateProperty]
     public Vector2[] Points
     {
@@ -41,9 +66,15 @@ public partial class GraphElement : VisualElement
         }
     }
 
+    /// <summary>
+    /// Stored mouse clicks
+    /// </summary>
     [SerializeField, DontCreateProperty]
     double[] _clicks = new double[0];
 
+    /// <summary>
+    /// Interface for setting mouse clicks
+    /// </summary>
     [UxmlAttribute, CreateProperty]
     public double[] Clicks
     {
@@ -55,9 +86,15 @@ public partial class GraphElement : VisualElement
         }
     }
 
+    /// <summary>
+    /// Stored graph points
+    /// </summary>
     [SerializeField, DontCreateProperty]
     double[] _data = new double[0];
 
+    /// <summary>
+    /// Graph points interface
+    /// </summary>
     [UxmlAttribute, CreateProperty]
     public double[] Data
     {
@@ -69,26 +106,43 @@ public partial class GraphElement : VisualElement
         }
     }
 
+    /// <summary>
+    /// UI element constructor
+    /// </summary>
     public GraphElement()
     {
         generateVisualContent += GenerateVisualContent;
     }
 
+    /// <summary>
+    /// Apply normalization vector to passed points
+    /// </summary>
+    /// <param name="point"> Point to be normalized </param>
+    /// <param name="normalization_vector"> Normalization vector </param>
+    /// <returns> Normalized point </returns>
     private Vector2 NormalizePoint(Vector2 point, Vector2 normalization_vector)
     {
         return new Vector2(point.x * normalization_vector.x, point.y * normalization_vector.y);
     }
 
+    /// <summary>
+    /// Draw graph
+    /// </summary>
+    /// <param name="context"> graphics context </param>
     private void GenerateVisualContent(MeshGenerationContext context)
     {
+        Painter2D painter = context.painter2D;
+
+        // Get graph element size
         float width = contentRect.width - start_offset;
         float height = contentRect.height;
 
+        // Basic data validation
         if(_clicks.Length == 0 || _points.Length == 0)
             return;
 
+        // Compute bounding box
         double duration = _clicks[^1] - _clicks[0];
-
         float max_y = float.NegativeInfinity;
         float min_y = float.PositiveInfinity;
 
@@ -98,17 +152,15 @@ public partial class GraphElement : VisualElement
             min_y = math.min(point.y, min_y);
         }
         
-        Painter2D painter = context.painter2D;
-        
+        // Compute vector for normalization, offset and first point
         Vector2 normalization_vector = new(
             1 / (float)duration * width, 
             1 / (max_y-min_y) * height / (middle_zero ? 2 : 1));
 
         Vector2 offset_vector = NormalizePoint(new Vector2(0, min_y), normalization_vector);
-
         Vector2 past = NormalizePoint(_points[0], normalization_vector);
 
-        // Draw tics
+        // Draw clicks
         painter.strokeColor = click_color;
         foreach (double click_time in Clicks)
         {
@@ -122,6 +174,7 @@ public partial class GraphElement : VisualElement
             painter.Stroke();
         }
 
+        // Draw peaks
         painter.strokeColor = Color.red;
         foreach (double data in Data)
         {

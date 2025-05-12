@@ -6,17 +6,44 @@ using UnityEngine.UI;
 
 public class Target : MonoBehaviour
 {
-    const int PADDING = 250;
+    /// <summary>
+    /// Minimal distance from screen edges in pixels ( always scaled to be 1920 x 1080 )
+    /// </summary>
+    const int PADDING = 180;
 
+    /// <summary>
+    /// Target label
+    /// </summary>
     [SerializeField] TMP_Text label;
+    
+    /// <summary>
+    /// Canvas group of the targer (used for hiding the target)
+    /// </summary>
     [SerializeField] CanvasGroup canvas_group;
 
+    /// <summary>
+    /// Target fill sprite
+    /// </summary>
     [SerializeField] Image fill;
+
+    /// <summary>
+    /// Target outline sprite
+    /// </summary>
     [SerializeField] Image outline;
     
+    /// <summary>
+    /// Flag representing whenever the target can be clicked
+    /// </summary>
     public bool CanBeClicked = true;
 
+    /// <summary>
+    /// ID of the target (by order)
+    /// </summary>
     public int id = -1;
+
+    /// <summary>
+    /// LeanTween value callback (use for setting alpha smoothly)
+    /// </summary>
     Action<float> on_alpha_change;
 
     void Start()
@@ -24,6 +51,13 @@ public class Target : MonoBehaviour
         on_alpha_change += OnAlphaChange;
     }
 
+    /// <summary>
+    /// Initialize test target
+    /// </summary>
+    /// <param name="id"> order of the target </param>
+    /// <param name="text"> target test </param>
+    /// <param name="primary"> primary color </param>
+    /// <param name="secondary"> secondary color </param>
     public void Init(int id, string text, Color primary, Color secondary)
     {
         this.id = id;
@@ -37,6 +71,11 @@ public class Target : MonoBehaviour
         label.text = "";
     }
 
+    /// <summary>
+    /// Sets target position without collision
+    /// </summary>
+    /// <param name="parent"> Canvas parent </param>
+    /// <param name="forbidden"> List of other targets </param>
     public void SetRandomPosition(Transform parent, List<Target> forbidden)
     {
         transform.SetParent(parent);
@@ -58,11 +97,18 @@ public class Target : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Set target alpha
+    /// </summary>
+    /// <param name="alpha"> alpha </param>
     void OnAlphaChange(float alpha)
     {
         canvas_group.alpha = alpha;
     }
 
+    /// <summary>
+    /// On click callback
+    /// </summary>
     public void OnClicked()
     {
         CanBeClicked = false;

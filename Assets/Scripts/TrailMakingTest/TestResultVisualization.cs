@@ -1,7 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// SGO for connecting with Unity UI Toolkit
+/// </summary>
 [CreateAssetMenu(fileName = "TRV", menuName = "Tests/TRV", order = 1)]
 public class TestResultVisualization : ScriptableObject
 {

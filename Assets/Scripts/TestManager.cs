@@ -191,7 +191,7 @@ public class TestManager : MonoBehaviour
         if (!trail_making_test.Active)
             return;
 
-        Sample click = new(last_mouse_position, Time.realtimeSinceStartupAsDouble, true);
+        Sample click = new(last_mouse_position, Time.realtimeSinceStartupAsDouble);
         trail_making_test.AddClick(click);
     }
 
@@ -203,7 +203,7 @@ public class TestManager : MonoBehaviour
         if (!trail_making_test.Active)
             return;
 
-        Sample sample = new(last_mouse_position, Time.realtimeSinceStartupAsDouble, false);
+        Sample sample = new(last_mouse_position, Time.realtimeSinceStartupAsDouble);
         trail_making_test.AddSample(sample);
     }
 
