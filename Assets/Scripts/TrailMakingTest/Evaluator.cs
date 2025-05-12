@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.VisualScripting;
+using System;
 
 public class Evaluator
 {
@@ -36,6 +37,21 @@ public class Evaluator
     {
         double score = targets.Count * 1.5f / GetTestDuration() * GetCorrectness() * GetConfidence() * GetModifiers() * 100;
         return score;
+    }
+
+    public TestResult GetResult()
+    {
+        TestResult result;
+        
+        result.Duration = (((int)(GetTestDuration() * 100)) / 100f).ToString() + " s";
+        result.Correct = (((int)(GetCorrectness() * 10000)) / 100f).ToString() + "%";
+        result.Score = (((int)(GetScore() * 100)) / 100f).ToString();
+        result.Sureness = ((int)(GetConfidence() * 100)).ToString() + "%";
+        
+        result.Size = targets.Count.ToString();
+        result.Modifier = GetModifiers().ToString() + "x";
+
+        return result;
     }
 
     public double GetModifiers()
@@ -94,8 +110,6 @@ public class Evaluator
                 current = target.id;
             }
         }
-
-        
 
         return correct / targets.Count;
     }
@@ -261,7 +275,6 @@ public class Evaluator
         }
 
         // Clustering
-
         List<double> clusters = new();
 
         List<double> cluster = new();

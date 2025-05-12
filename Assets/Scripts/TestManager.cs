@@ -2,8 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-
-// using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 public class TestManager : MonoBehaviour
@@ -21,6 +19,7 @@ public class TestManager : MonoBehaviour
     Button retry_button;
     Button btmm_button;
 
+    [SerializeField] VisualTreeAsset history_template;
 
     [SerializeField] TrailRenderer trail_renderer;
 
@@ -29,11 +28,11 @@ public class TestManager : MonoBehaviour
     Keybinds _keybinds;
 
     Action<float> OnMenuOpacityChanged;
-    Action<float> OnResultsOpacityChanged;
-
     public Action on_test_finished;
 
     Vector2 last_mouse_position = Vector2.zero;
+
+    Serializer serializer = new();
 
     void Start()
     {
@@ -42,25 +41,50 @@ public class TestManager : MonoBehaviour
         start_button = start_menu.Q<Button>("StartButton");
         start_button.clicked += OnTestBegin;
 
-
         // Link results menu
         results_menu = results_menu_document.rootVisualElement;
-        
-        btmm_button = results_menu.Q<Button>("BackToMainMenu");
-        btmm_button.clicked += ToMainMenu;
-        
+                
         retry_button = results_menu.Q<Button>("TryAgain");
         retry_button.clicked += Repeat;
-        results_menu.visible = false;
-
-        // results_menu.style.opacity = 0;
-        // results_menu_document.enabled = false;
-        
+        results_menu.visible = false;   // This does not flush all binded events
 
         OnMenuOpacityChanged += SetMenuOpactity;
-        OnResultsOpacityChanged += SetResultsOpacity;
-
         on_test_finished += OnTestFinished;
+
+        ListView history = start_menu_document.rootVisualElement.Q<ListView>("History");
+        history.reorderable = false;
+        history.selectionType = SelectionType.None;
+        history.makeItem = () => 
+        {
+            var history_item = history_template.Instantiate();
+            return history_item;
+        };
+
+        var results = serializer.GetAllResults();
+        history.bindItem = (element, index) =>
+        {
+            string[] label_ids = {
+                "Score",
+                "Duration",
+                "Size",
+                "Correct",
+                "Sureness",
+                "Modifier"
+                };
+
+            foreach(string id in label_ids)
+                element.Q<Label>(id).dataSource = results[index];
+
+            if (float.TryParse(results[index].Score, out float score))
+            {
+                float hue = score / 1000 * 0.5f;
+                hue = Mathf.Clamp(hue, 0, 0.5f);
+                element.Q<VisualElement>("CTNR").style.backgroundColor = new(Color.HSVToRGB(hue, 0.3f, 1));
+            }
+            element.MarkDirtyRepaint();
+        };
+        history.itemsSource = results;
+        history.RefreshItems();
     }
 
     void Update()
@@ -93,26 +117,28 @@ public class TestManager : MonoBehaviour
         ShowResults();
 
         // Show results
-        // LeanTween.value(gameObject, OnResultsOpacityChanged, 0, 1, 0.25f);
         results_menu.visible = true;
     }
 
     void ShowResults()
     {
         Evaluator evaluator = new(trail_making_test.Samples, trail_making_test.Clicks, trail_making_test.Targets, trail_making_test.HiddenVariant);
+
+        TestResult result = evaluator.GetResult();
+      
         results.SpeedGraph = evaluator.GetSpeedGraph();
         results.Clicks = evaluator.GetClicks();
 
         results.Data = Evaluator.GetPeakApproximation(new System.Collections.Generic.List<Vector2>(results.SpeedGraph)).ToArray();
 
-        results.Duration = (((int)(evaluator.GetTestDuration() * 100)) / 100f).ToString() + " s";
-        results.Correct = (((int)(evaluator.GetCorrectness() * 10000)) / 100f).ToString() + "%";
-        results.Score = (((int)(evaluator.GetScore() * 100)) / 100f).ToString();
-        results.AccelerationGraph = evaluator.GetAccelerationGraph();
-        results.Sureness = ((int)(evaluator.GetConfidence() * 100)).ToString() + "%";
+        results.Duration = result.Duration;
+        results.Correct = result.Correct;
+        results.Score = result.Score;
+        results.Sureness = result.Sureness; 
+        results.TestSize = result.Size;
+        results.ActiveModifier = result.Modifier;
 
-        results.TestSize = trail_making_test.TargetCount.ToString();
-        results.ActiveModifier = evaluator.GetModifiers().ToString() + "x";
+        serializer.SaveResult(result);
     }
 
     void SetMenuOpactity(float value)
@@ -121,17 +147,6 @@ public class TestManager : MonoBehaviour
 
         if (value == 0)
             start_menu_document.enabled = false;
-    }
-
-    void SetResultsOpacity(float value)
-    {
-        if(!results_menu_document.enabled)
-            results_menu_document.enabled = true;
-        
-        results_menu.style.opacity = value;
-        btmm_button.clicked += ToMainMenu;
-        retry_button.clicked += Repeat;
-        Debug.Log(value);
     }
 
     // === Input management ===

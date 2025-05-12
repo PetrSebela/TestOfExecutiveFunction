@@ -70,9 +70,8 @@
                     </engine:VisualElement>
                 </engine:VisualElement>
             </engine:VisualElement>
-            <engine:VisualElement name="TryAgain" style="flex-grow: 1; height: 25%; max-height: 25%; align-content: stretch; justify-content: space-between; align-self: auto; align-items: center; width: 50%;">
+            <engine:VisualElement name="TryAgain" style="flex-grow: 1; height: 25%; max-height: 25%; align-content: center; justify-content: center; align-self: auto; align-items: center; width: 50%;">
                 <engine:Button text="Try again" name="TryAgain" class="button" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; width: 100%; transition-duration: 0.125s;" />
-                <engine:Button text="Back to main menu" name="BackToMainMenu" class="button" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; width: 100%; transition-duration: 0.125s;" />
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>

@@ -719,6 +719,7 @@ MonoBehaviour:
   start_menu_document: {fileID: 68009028}
   results_menu_document: {fileID: 1196130924}
   results: {fileID: 11400000, guid: 3f6f35be0ba697c2ca6b657531cb47d8, type: 2}
+  history_template: {fileID: 9197481963319205126, guid: 632b31815f1fd2714aa4759706aa7d68, type: 3}
   trail_renderer: {fileID: 933729139}
   trail_making_test: {fileID: 1915893061}
 --- !u!4 &1915893060

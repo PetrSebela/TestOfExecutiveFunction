@@ -1,0 +1,53 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/TMTMenu.uss?fileID=7433441132597879392&amp;guid=e5bb07f9ff6fa03fd985b661b6ec87a0&amp;type=3#TMTMenu" />
+    <engine:VisualElement name="CTNR" picking-mode="Ignore" style="flex-grow: 1; background-color: rgb(213, 255, 224); height: 100px; max-height: 100px; width: 100%; min-width: 100%; flex-direction: row; align-self: center; align-items: center; justify-content: space-between; padding-top: 16px; padding-right: 16px; padding-bottom: 16px; padding-left: 16px; border-top-left-radius: 16px; border-top-right-radius: 16px; border-bottom-right-radius: 16px; border-bottom-left-radius: 16px; margin-bottom: 32px;">
+        <engine:VisualElement style="flex-grow: 1; flex-direction: column; width: 10%; max-width: 15%; height: 100%;">
+            <engine:Label text="Score" class="header" style="height: 50%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-center; -unity-font-style: bold; font-size: 10px; -unity-font-definition: url(&quot;project://database/Assets/Graphics/Fonts/Lato/Lato-Bold.ttf?fileID=12800000&amp;guid=2bf9518d16ee0755fb32f95de6d93d44&amp;type=3#Lato-Bold&quot;);" />
+            <engine:Label text="0" name="Score" style="height: 50%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-center; -unity-font-style: italic;">
+                <Bindings>
+                    <engine:DataBinding property="text" data-source-path="Score" data-source-type="TestResult, Assembly-CSharp" binding-mode="ToTarget" />
+                </Bindings>
+            </engine:Label>
+        </engine:VisualElement>
+        <engine:VisualElement style="flex-grow: 1; flex-direction: column; width: 10%; max-width: 15%; height: 100%;">
+            <engine:Label text="Duration" style="height: 50%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-center; -unity-font-style: bold; font-size: 10px; -unity-font-definition: url(&quot;project://database/Assets/Graphics/Fonts/Lato/Lato-Bold.ttf?fileID=12800000&amp;guid=2bf9518d16ee0755fb32f95de6d93d44&amp;type=3#Lato-Bold&quot;);" />
+            <engine:Label text="0" name="Duration" style="height: 50%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-center; -unity-font-style: italic;">
+                <Bindings>
+                    <engine:DataBinding property="text" data-source-path="Duration" data-source-type="TestResult, Assembly-CSharp" binding-mode="ToTarget" />
+                </Bindings>
+            </engine:Label>
+        </engine:VisualElement>
+        <engine:VisualElement style="flex-grow: 1; flex-direction: column; width: 10%; max-width: 15%; height: 100%;">
+            <engine:Label text="Size" style="height: 50%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-center; -unity-font-style: bold; font-size: 10px; -unity-font-definition: url(&quot;project://database/Assets/Graphics/Fonts/Lato/Lato-Bold.ttf?fileID=12800000&amp;guid=2bf9518d16ee0755fb32f95de6d93d44&amp;type=3#Lato-Bold&quot;);" />
+            <engine:Label text="0" name="Size" style="height: 50%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-center; -unity-font-style: italic;">
+                <Bindings>
+                    <engine:DataBinding property="text" data-source-path="Size" data-source-type="TestResult, Assembly-CSharp" binding-mode="ToTarget" />
+                </Bindings>
+            </engine:Label>
+        </engine:VisualElement>
+        <engine:VisualElement style="flex-grow: 1; flex-direction: column; width: 10%; max-width: 15%; height: 100%;">
+            <engine:Label text="Correct" style="height: 50%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-center; -unity-font-style: bold; font-size: 10px; -unity-font-definition: url(&quot;project://database/Assets/Graphics/Fonts/Lato/Lato-Bold.ttf?fileID=12800000&amp;guid=2bf9518d16ee0755fb32f95de6d93d44&amp;type=3#Lato-Bold&quot;);" />
+            <engine:Label text="0" name="Correct" style="height: 50%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-center; -unity-font-style: italic;">
+                <Bindings>
+                    <engine:DataBinding property="text" data-source-path="Sureness" data-source-type="TestResult, Assembly-CSharp" binding-mode="ToTarget" />
+                </Bindings>
+            </engine:Label>
+        </engine:VisualElement>
+        <engine:VisualElement style="flex-grow: 1; flex-direction: column; width: 10%; max-width: 15%; height: 100%;">
+            <engine:Label text="Sureness" style="height: 50%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-center; -unity-font-style: bold; font-size: 10px; -unity-font-definition: url(&quot;project://database/Assets/Graphics/Fonts/Lato/Lato-Bold.ttf?fileID=12800000&amp;guid=2bf9518d16ee0755fb32f95de6d93d44&amp;type=3#Lato-Bold&quot;);" />
+            <engine:Label text="0" name="Sureness" style="height: 50%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-center; -unity-font-style: italic;">
+                <Bindings>
+                    <engine:DataBinding property="text" data-source-path="Sureness" data-source-type="TestResult, Assembly-CSharp" binding-mode="ToTarget" />
+                </Bindings>
+            </engine:Label>
+        </engine:VisualElement>
+        <engine:VisualElement style="flex-grow: 1; flex-direction: column; width: 10%; max-width: 15%; height: 100%;">
+            <engine:Label text="Modifier" style="height: 50%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-center; -unity-font-style: bold; font-size: 10px; -unity-font-definition: url(&quot;project://database/Assets/Graphics/Fonts/Lato/Lato-Bold.ttf?fileID=12800000&amp;guid=2bf9518d16ee0755fb32f95de6d93d44&amp;type=3#Lato-Bold&quot;);" />
+            <engine:Label text="0" name="Modifier" style="height: 50%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-center; -unity-font-style: italic;">
+                <Bindings>
+                    <engine:DataBinding property="text" data-source-path="Modifier" data-source-type="TestResult, Assembly-CSharp" binding-mode="ToTarget" />
+                </Bindings>
+            </engine:Label>
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>
