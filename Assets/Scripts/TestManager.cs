@@ -4,36 +4,94 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
+/// <summary>
+/// Class containing all UI logic and input processing.
+/// </summary>
 public class TestManager : MonoBehaviour
 {
+    /// <summary>
+    /// Start menu UI document
+    /// </summary>
     [SerializeField] UIDocument start_menu_document;
+    
+    /// <summary>
+    /// Results menu UI document
+    /// </summary>
     [SerializeField] UIDocument results_menu_document;
-
+    
+    /// <summary>
+    /// Start menu UI element reference
+    /// </summary>
     VisualElement start_menu;
+
+    /// <summary>
+    /// Results menu UI element reference
+    /// </summary>
     VisualElement results_menu;
 
+    /// <summary>
+    /// SGO reference for result visualization
+    /// </summary>
     [SerializeField] TestResultVisualization results;
 
+    /// <summary>
+    /// Start button reference
+    /// </summary>
     Button start_button;
 
+    /// <summary>
+    /// Retry button reference
+    /// </summary>
     Button retry_button;
+
+    /// <summary>
+    /// Back to main menu button reference
+    /// </summary>
     Button btmm_button;
 
+    /// <summary>
+    /// Template for history object
+    /// </summary>
     [SerializeField] VisualTreeAsset history_template;
 
+    /// <summary>
+    /// Cursor train object
+    /// </summary>
     [SerializeField] TrailRenderer trail_renderer;
 
+    /// <summary>
+    /// TMT instance
+    /// </summary>
     [SerializeField] TrailMakingTest trail_making_test;
 
+    /// <summary>
+    /// Input system link
+    /// </summary>
     Keybinds _keybinds;
 
+    /// <summary>
+    /// MenuOpacityChange callback
+    /// </summary>
     Action<float> OnMenuOpacityChanged;
+    
+    /// <summary>
+    /// OnTestFinished callback
+    /// </summary>
     public Action on_test_finished;
 
+    /// <summary>
+    /// Last mouse position
+    /// </summary>
     Vector2 last_mouse_position = Vector2.zero;
 
+    /// <summary>
+    /// Instance of serializer
+    /// </summary>
     Serializer serializer = new();
 
+    /// <summary>
+    /// Override of Monobehavior method
+    /// </summary>
     void Start()
     {
         // Link start menu
@@ -87,6 +145,9 @@ public class TestManager : MonoBehaviour
         history.RefreshItems();
     }
 
+    /// <summary>
+    /// Override of Monobehavior method
+    /// </summary>
     void Update()
     {
         trail_renderer.enabled = trail_making_test.IsReady;
@@ -94,6 +155,9 @@ public class TestManager : MonoBehaviour
             trail_renderer.transform.position = last_mouse_position;
     }
 
+    /// <summary>
+    /// OnTestBegin callback
+    /// </summary>
     void OnTestBegin()
     {
         Debug.Log("Starting TMT");
@@ -106,6 +170,9 @@ public class TestManager : MonoBehaviour
         trail_making_test.IsReady = true;
     }
 
+    /// <summary>
+    /// Show results window and set results
+    /// </summary>
     public void OnTestFinished()
     {
         Debug.Log("Finishing TMT");
@@ -121,6 +188,9 @@ public class TestManager : MonoBehaviour
         results_menu.visible = true;
     }
 
+    /// <summary>
+    /// Sets results window
+    /// </summary>
     void ShowResults()
     {
         Evaluator evaluator = new(trail_making_test);
@@ -142,6 +212,9 @@ public class TestManager : MonoBehaviour
         serializer.SaveResult(result);
     }
 
+    /// <summary>
+    /// Sets opacity of the start menu window
+    /// </summary>
     void SetMenuOpactity(float value)
     {
         start_menu.style.opacity = value;
@@ -152,35 +225,53 @@ public class TestManager : MonoBehaviour
 
     // === Input management ===
 
+    /// <summary>
+    /// Override of Monobehavior method
+    /// </summary>
     void Awake()
     {
         _keybinds = new();
     }
 
+    /// <summary>
+    /// Override of Monobehavior method
+    /// </summary>
     void OnEnable()
     {
         _keybinds.Enable();
         SubscribeEvents();
     }
 
+    /// <summary>
+    /// Override of Monobehavior method
+    /// </summary>
     void OnDisable()
     {
         _keybinds.Disable();
         UnsubscribeEvents();
     }
 
+    /// <summary>
+    /// Add callbacks from input system
+    /// </summary>
     void SubscribeEvents()
     {
         _keybinds.TrailMakingTest.MousePosition.performed += ProcessInput;
         _keybinds.TrailMakingTest.MouseButtonDown.performed += OnFirePerformed;
     }
 
+    /// <summary>
+    /// Remove callbacks from input system
+    /// </summary>
     void UnsubscribeEvents()
     {
         _keybinds.TrailMakingTest.MousePosition.performed -= ProcessInput;
         _keybinds.TrailMakingTest.MouseButtonDown.performed -= OnFirePerformed;
     }
 
+    /// <summary>
+    /// Mouse click processing callback
+    /// </summary>
     void OnFirePerformed(InputAction.CallbackContext context)
     {
         if (trail_making_test.IsReady && !trail_making_test.Active)
@@ -196,6 +287,9 @@ public class TestManager : MonoBehaviour
         trail_making_test.AddClick(click);
     }
 
+    /// <summary>
+    /// Mouse input processing callback
+    /// </summary>
     void ProcessInput(InputAction.CallbackContext context)
     {
         Vector2 screen_point = context.ReadValue<Vector2>();
@@ -208,12 +302,18 @@ public class TestManager : MonoBehaviour
         trail_making_test.AddSample(sample);
     }
 
+    /// <summary>
+    /// Realoads the test scene 
+    /// </summary>
     void ToMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
         Debug.Log("main menu");
     }
 
+    /// <summary>
+    /// Reloads the test scene
+    /// </summary>
     void Repeat()
     {
         SceneManager.LoadScene("TrailMakingTest");
